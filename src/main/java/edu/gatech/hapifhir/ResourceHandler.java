@@ -5,9 +5,15 @@ import org.hl7.fhir.r4.model.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 
 public class ResourceHandler {
+
+    private static final String US_CORE_PATIENT_URL =
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient";
+    private static final String US_CORE_ETHNICITY_URL =
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity";
 
     public ResourceHandler() {
         // Do not add anything to this constructor method.
@@ -31,10 +37,10 @@ public class ResourceHandler {
         // check if observation is null. If it is, create new observation
         if (observation == null) observation = new Observation();
 
-        Coding coding = new Coding();
-        coding.setSystem(system);
-        coding.setCode(code);
-        coding.setDisplay(display);
+        Coding coding = new Coding(system, code, display);
+//        coding.setSystem(system);
+//        coding.setCode(code);
+//        coding.setDisplay(display);
 
         CodeableConcept codeableConcept = new CodeableConcept();
         codeableConcept.addCoding(coding);
@@ -53,7 +59,12 @@ public class ResourceHandler {
         // names. The name provided should be the only given name (a single item List).
 
         // START STUDENT CODE HERE
-        for (HumanName name : patient.getName()) {
+        if (patient == null || givenName == null) return patient;
+
+        List<HumanName> allNames = patient.getName();
+        if (allNames == null) return patient;
+
+        for (HumanName name : allNames) {
             if (name != null && name.getUse() == HumanName.NameUse.OFFICIAL) {
                 name.getGiven().clear();
                 name.addGiven(givenName);
@@ -86,25 +97,31 @@ public class ResourceHandler {
         usCorePatient.addName(name);
 
         //set the US core patient profile URL
-        usCorePatient.getMeta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient");
+        usCorePatient.getMeta().addProfile(US_CORE_PATIENT_URL);
 
         //Set Ethnicity Extension(OMB category, detailed ethnicity, text)
         Extension ethnicityExtension = new Extension();
-        ethnicityExtension.setUrl("http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
+        ethnicityExtension.setUrl(US_CORE_ETHNICITY_URL);
 
         Extension ombCategoryExtension = new Extension();
         ombCategoryExtension.setUrl("ombCategory");
-        ombCategoryExtension.setValue(ethnicityOmbCoding);
+        if (ethnicityOmbCoding != null) {
+            ombCategoryExtension.setValue(ethnicityOmbCoding);
+        }
         ethnicityExtension.addExtension(ombCategoryExtension);
 
         Extension detailedExtension = new Extension();
         detailedExtension.setUrl("detailed");
-        detailedExtension.setValue(ethnicityDetailedCoding);
+        if (ethnicityDetailedCoding != null) {
+            ombCategoryExtension.setValue(detailedExtension);
+        }
         ethnicityExtension.addExtension(detailedExtension);
 
         Extension textExtension = new Extension();
         textExtension.setUrl("text");
-        textExtension.setValue(new StringType(ethnicityText));
+        if (ethnicityText != null) {
+            textExtension.setValue(new StringType(ethnicityText));
+        }
         ethnicityExtension.addExtension(textExtension);
 
         usCorePatient.addExtension(ethnicityExtension);

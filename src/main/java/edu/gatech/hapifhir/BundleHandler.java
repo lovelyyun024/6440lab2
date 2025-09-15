@@ -37,7 +37,6 @@ public class BundleHandler {
         // START STUDENT CODE HERE
         if (bundle == null) return patientArrayList;
 
-
         List<Bundle.BundleEntryComponent> entries = bundle.getEntry();
         if (entries == null) return patientArrayList;
 
@@ -48,30 +47,44 @@ public class BundleHandler {
             // Check if the resource is a Patient
             if (resource instanceof Patient) {
                 Patient patient = (Patient) resource;
-                Boolean checkDeceased = false;
-
-                // Check if patient is deceased by check hasDeceased value
-                if (patient.hasDeceased()) {
-                    // Check if it's a boolean and true, or if it's a dateTime
-                    Type typeValue = patient.getDeceased();
-                    if (typeValue instanceof BooleanType) {
-                        BooleanType deceasedBoolean = (BooleanType) patient.getDeceased();
-                        if (deceasedBoolean.getValue()) {
-                            checkDeceased = true;
-                        }
-                    } else if (typeValue instanceof DateTimeType) {
-                        // Any dateTime value means deceased
-                        checkDeceased = true;
-                    }
-                }
-                if (checkDeceased) {
+                if (isDeceasedHelper(patient)) {
                     patientArrayList.add(patient);
                 }
+//                Boolean checkDeceased = false;
+
+//                // Check if patient is deceased by check hasDeceased value
+//                if (patient.hasDeceased()) {
+//                    // Check if it's a boolean and true, or if it's a dateTime
+//                    Type typeValue = patient.getDeceased();
+//                    if (typeValue instanceof BooleanType) {
+//                        BooleanType deceasedBoolean = (BooleanType) patient.getDeceased();
+//                        if (deceasedBoolean.getValue()) {
+////                            checkDeceased = true;
+//                        }
+//                    } else if (typeValue instanceof DateTimeType) {
+//                        // Any dateTime value means deceased
+////                        checkDeceased = true;
+//                    }
+//                }
+//                if (checkDeceased) {
+//                    patientArrayList.add(patient);
+//                }
+
             }
+
         }
 
         // END STUDENT CODE HERE
 
         return patientArrayList; //
+    }
+
+    private boolean isDeceasedHelper(Patient p) {
+        if (p == null || !p.hasDeceased()) return false;
+
+        Type t = p.getDeceased();
+        if (t instanceof DateTimeType) return true;
+        if (t instanceof BooleanType) return ((BooleanType) t).booleanValue();
+        return false;
     }
 }
