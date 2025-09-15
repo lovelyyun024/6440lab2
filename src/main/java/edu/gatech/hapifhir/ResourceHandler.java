@@ -25,6 +25,7 @@ public class ResourceHandler {
         String id = "";
         // Get the "id" value of any resource without any additional data. (No base server urls, resource types, etc.)
         // START STUDENT CODE HERE
+        if (resource == null){}
 
         // END STUDENT CODE HERE
 
