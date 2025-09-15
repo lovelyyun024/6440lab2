@@ -35,7 +35,7 @@ public class BundleHandler {
         ArrayList<Patient> patientArrayList = new ArrayList<>();
 
         // START STUDENT CODE HERE
-        if (bundle != null) {return patientArrayList;
+        if (bundle != null) return patientArrayList;
 
 
         List<Bundle.BundleEntryComponent> entries = bundle.getEntry();
@@ -47,7 +47,7 @@ public class BundleHandler {
 
             // Check if the resource is a Patient
             if (resource instanceof Patient) {
-                Patient patient = resource;
+                Patient patient = (Patient) resource;
                 Boolean checkDeceased = false;
 
                 // Check if patient is deceased by check hasDeceased value
@@ -64,7 +64,9 @@ public class BundleHandler {
                         checkDeceased = true;
                     }
                 }
-                if (checkDeceased) {patientArrayList.add(patient);}
+                if (checkDeceased) {
+                    patientArrayList.add(patient);
+                }
             }
         }
 
