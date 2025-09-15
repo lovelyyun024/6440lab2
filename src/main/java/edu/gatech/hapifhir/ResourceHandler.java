@@ -1,15 +1,7 @@
 package edu.gatech.hapifhir;
 
 import org.hl7.fhir.instance.model.api.IBaseResource;
-import org.hl7.fhir.r4.model.CodeableConcept;
-import org.hl7.fhir.r4.model.Coding;
-import org.hl7.fhir.r4.model.Extension;
-import org.hl7.fhir.r4.model.HumanName;
-import org.hl7.fhir.r4.model.Identifier;
-import org.hl7.fhir.r4.model.Patient;
-
-import org.hl7.fhir.r4.model.Observation;
-import org.hl7.fhir.r4.model.StringType;
+import org.hl7.fhir.r4.model.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,7 +17,9 @@ public class ResourceHandler {
         String id = "";
         // Get the "id" value of any resource without any additional data. (No base server urls, resource types, etc.)
         // START STUDENT CODE HERE
-        if (resource == null){}
+        if (resource == null || resource.getIdElement()!= null) return null;
+        id = resource.getIdElement().getIdPart();
+//        IdType curId = resource.getIdElement().getIdPart();
 
         // END STUDENT CODE HERE
 
