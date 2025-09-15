@@ -84,7 +84,10 @@ public class BundleHandler {
 
         Type t = p.getDeceased();
         if (t instanceof DateTimeType) return true;
-        if (t instanceof BooleanType) return ((BooleanType) t).booleanValue();
+        if (t instanceof BooleanType) {
+            BooleanType deceasedBoolean = (BooleanType) t;
+            return deceasedBoolean.booleanValue(); // or: return Boolean.TRUE.equals(b.getValue());
+        }
         return false;
     }
 }
