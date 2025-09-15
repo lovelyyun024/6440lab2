@@ -40,7 +40,7 @@ public class ResourceHandler {
         codeableConcept.addCoding(coding);
 
         observation.setCode(codeableConcept);
-        return observation;
+//        return observation;
 
         // END STUDENT CODE HERE
         return observation;
@@ -53,6 +53,8 @@ public class ResourceHandler {
         // names. The name provided should be the only given name (a single item List).
 
         // START STUDENT CODE HERE
+        if (givenName == null || patient == null) return null;
+        patient.getName().get(0).getGiven().set(0,  new StringType(givenName));
 
         // END STUDENT CODE HERE
         return patient;
