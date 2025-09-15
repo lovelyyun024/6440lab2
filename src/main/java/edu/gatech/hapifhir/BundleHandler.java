@@ -28,7 +28,7 @@ public class BundleHandler {
 
         // END STUDENT CODE HERE
 
-        return ""; // Returning empty string so starter code compiles.
+//        return ""; // Returning empty string so starter code compiles.
     }
 
     public ArrayList<Patient> getListOfDeceasedPatients(Bundle bundle) {
