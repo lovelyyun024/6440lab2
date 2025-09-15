@@ -89,17 +89,18 @@ public class ResourceHandler {
         usCorePatient.getMeta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient");
 
         //Set Ethnicity Extension(OMB category, detailed ethnicity, text)
-        Extension ethnicityOmbExtension = new Extension("http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
+        Extension ethnicityExtension = new Extension("http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
+
         CodeableConcept ombCategory = new CodeableConcept();
         ombCategory.addCoding(ethnicityOmbCoding);
-        ethnicityOmbExtension.addExtension("ombCategory", ombCategory);
+        ethnicityExtension.addExtension("ombCategory", ethnicityOmbCoding);
 
         CodeableConcept detailedEthnicity = new CodeableConcept();
         detailedEthnicity.addCoding(ethnicityDetailedCoding);
-        ethnicityOmbExtension.addExtension("detailed", detailedEthnicity);
+        ethnicityExtension.addExtension("detailed", detailedEthnicity);
 
-        ethnicityOmbExtension.addExtension("text", new StringType(ethnicityText));
-        usCorePatient.addExtension(ethnicityOmbExtension);
+        ethnicityExtension.addExtension("text", new StringType(ethnicityText));
+        usCorePatient.addExtension(ethnicityExtension);
 
 //        return usCorePatient;
 
