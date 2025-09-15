@@ -35,7 +35,7 @@ public class BundleHandler {
         ArrayList<Patient> patientArrayList = new ArrayList<>();
 
         // START STUDENT CODE HERE
-        if (bundle != null) return patientArrayList;
+        if (bundle == null) return patientArrayList;
 
 
         List<Bundle.BundleEntryComponent> entries = bundle.getEntry();
