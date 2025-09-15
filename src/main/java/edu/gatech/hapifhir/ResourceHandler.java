@@ -89,17 +89,24 @@ public class ResourceHandler {
         usCorePatient.getMeta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient");
 
         //Set Ethnicity Extension(OMB category, detailed ethnicity, text)
-        Extension ethnicityExtension = new Extension("http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
+        Extension ethnicityExtension = new Extension();
+        ethnicityExtension.setUrl("http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
 
-        CodeableConcept ombCategory = new CodeableConcept();
-        ombCategory.addCoding(ethnicityOmbCoding);
-        ethnicityExtension.addExtension("ombCategory", ethnicityOmbCoding);
+        Extension ombCategoryExtension = new Extension();
+        ombCategoryExtension.setUrl("ombCategory");
+        ombCategoryExtension.setValue(ethnicityOmbCoding);
+        ethnicityExtension.addExtension(ombCategoryExtension);
 
-        CodeableConcept detailedEthnicity = new CodeableConcept();
-        detailedEthnicity.addCoding(ethnicityDetailedCoding);
-        ethnicityExtension.addExtension("detailed", detailedEthnicity);
+        Extension detailedExtension = new Extension();
+        detailedExtension.setUrl("detailed");
+        detailedExtension.setValue(ethnicityDetailedCoding);
+        ethnicityExtension.addExtension(detailedExtension);
 
-        ethnicityExtension.addExtension("text", new StringType(ethnicityText));
+        Extension textExtension = new Extension();
+        textExtension.setUrl("text");
+        textExtension.setValue(new StringType(ethnicityText));
+        ethnicityExtension.addExtension(textExtension);
+
         usCorePatient.addExtension(ethnicityExtension);
 
 //        return usCorePatient;
