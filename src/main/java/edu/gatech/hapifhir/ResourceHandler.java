@@ -75,6 +75,33 @@ public class ResourceHandler {
         //
         // START STUDENT CODE HERE
 
+        //Set id, name and identifier
+        usCorePatient.setId(id);
+        usCorePatient.addIdentifier(identifier);
+        usCorePatient.addName(name);
+
+
+        //set the US core patient profile URL
+        usCorePatient.getMeta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient");
+
+        //Set Ethnicity Extension(OMB category, detailed ethnicity, text)
+        Extension ethnicityOmbExtension = new Extension("http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity");
+        CodeableConcept ombCategory = new CodeableConcept();
+        ombCategory.addCoding(ethnicityOmbCoding);
+        ethnicityOmbExtension.addExtension("ombCategory", ombCategory);
+
+        CodeableConcept detailedEthnicity = new CodeableConcept();
+        detailedEthnicity.addCoding(ethnicityDetailedCoding);
+        ethnicityOmbExtension.addExtension("detailed", detailedEthnicity);
+
+        ethnicityOmbExtension.addExtension("text", new StringType(ethnicityText));
+        usCorePatient.addExtension(ethnicityOmbExtension);
+
+        return usCorePatient;
+
+
+
+
         // END STUDENT CODE HERE
         return usCorePatient;
     }
