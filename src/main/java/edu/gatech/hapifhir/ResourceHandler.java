@@ -80,7 +80,6 @@ public class ResourceHandler {
         usCorePatient.addIdentifier(identifier);
         usCorePatient.addName(name);
 
-
         //set the US core patient profile URL
         usCorePatient.getMeta().addProfile("http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient");
 
@@ -97,10 +96,7 @@ public class ResourceHandler {
         ethnicityOmbExtension.addExtension("text", new StringType(ethnicityText));
         usCorePatient.addExtension(ethnicityOmbExtension);
 
-        return usCorePatient;
-
-
-
+//        return usCorePatient;
 
         // END STUDENT CODE HERE
         return usCorePatient;
