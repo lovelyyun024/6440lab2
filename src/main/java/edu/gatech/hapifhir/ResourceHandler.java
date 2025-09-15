@@ -53,8 +53,13 @@ public class ResourceHandler {
         // names. The name provided should be the only given name (a single item List).
 
         // START STUDENT CODE HERE
-        if (givenName == null || patient == null) return null;
-        patient.getName().get(0).getGiven().set(0,  new StringType(givenName));
+        for (HumanName name : patient.getName()) {
+            if (name != null && name.getUse() == HumanName.NameUse.OFFICIAL) {
+                name.getGiven().clear();
+                name.addGiven(givenName);
+                break;
+            }
+        }
 
         // END STUDENT CODE HERE
         return patient;
