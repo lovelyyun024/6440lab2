@@ -113,7 +113,7 @@ public class ResourceHandler {
         Extension detailedExtension = new Extension();
         detailedExtension.setUrl("detailed");
         if (ethnicityDetailedCoding != null) {
-            ombCategoryExtension.setValue(ethnicityDetailedCoding);
+            detailedExtension.setValue(ethnicityDetailedCoding);
         }
         ethnicityExtension.addExtension(detailedExtension);
 
