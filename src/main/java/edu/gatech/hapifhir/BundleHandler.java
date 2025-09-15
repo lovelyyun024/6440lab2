@@ -52,11 +52,11 @@ public class BundleHandler {
 
                 // Check if patient is deceased by check hasDeceased value
                 if (patient.hasDeceased()) {
-                    // Check if it's a boolean and true, or if it's a dateTime (any date means deceased)
+                    // Check if it's a boolean and true, or if it's a dateTime
                     Type typeValue = patient.getDeceased();
                     if (typeValue instanceof BooleanType) {
                         BooleanType deceasedBoolean = (BooleanType) patient.getDeceased();
-                        if (deceasedBoolean.getValue() == true) {
+                        if (deceasedBoolean.getValue()) {
                             checkDeceased = true;
                         }
                     } else if (typeValue instanceof DateTimeType) {
