@@ -1,7 +1,6 @@
 package edu.gatech.hapifhir;
 
-import org.hl7.fhir.r4.model.Bundle;
-import org.hl7.fhir.r4.model.Patient;
+import org.hl7.fhir.r4.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +35,38 @@ public class BundleHandler {
         ArrayList<Patient> patientArrayList = new ArrayList<>();
 
         // START STUDENT CODE HERE
+        if (bundle != null) {return patientArrayList;
+
+
+        List<Bundle.BundleEntryComponent> entries = bundle.getEntry();
+        if (entries == null) return patientArrayList;
+
+        for (Bundle.BundleEntryComponent entry : entries) {
+            // Get the resource from the entry
+            Resource resource = entry.getResource();
+
+            // Check if the resource is a Patient
+            if (resource instanceof Patient) {
+                Patient patient = resource;
+                Boolean checkDeceased = false;
+
+                // Check if patient is deceased by check hasDeceased value
+                if (patient.hasDeceased()) {
+                    // Check if it's a boolean and true, or if it's a dateTime (any date means deceased)
+                    Type typeValue = patient.getDeceased();
+                    if (typeValue instanceof BooleanType) {
+                        BooleanType deceasedBoolean = (BooleanType) patient.getDeceased();
+                        if (deceasedBoolean.getValue() == true) {
+                            checkDeceased = true;
+                        }
+                    } else if (typeValue instanceof DateTimeType) {
+                        // Any dateTime value means deceased
+                        checkDeceased = true;
+                    }
+                }
+                if (checkDeceased) {patientArrayList.add(patient);}
+            }
+        }
 
         // END STUDENT CODE HERE
 
