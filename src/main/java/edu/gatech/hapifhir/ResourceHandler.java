@@ -20,7 +20,6 @@ public class ResourceHandler {
         if (resource == null || resource.getIdElement()!= null) return null;
         id = resource.getIdElement().getIdPart();
 //        IdType curId = resource.getIdElement().getIdPart();
-
         // END STUDENT CODE HERE
 
         return id; // Replace this. Returns empty string just so it will compile.
@@ -29,6 +28,19 @@ public class ResourceHandler {
     public Observation addObservationCode(Observation observation, String system, String code, String display){
         // Create a CodeableConcept and add it to an existing Observation resource.
         // START STUDENT CODE HERE
+        // check if observation is null. If it is, create new observation
+        if (observation == null) observation = new Observation();
+
+        Coding coding = new Coding();
+        coding.setSystem(system);
+        coding.setCode(code);
+        coding.setDisplay(display);
+
+        CodeableConcept codeableConcept = new CodeableConcept();
+        codeableConcept.addCoding(coding);
+
+        observation.setCode(codeableConcept);
+        return observation;
 
         // END STUDENT CODE HERE
         return observation;
